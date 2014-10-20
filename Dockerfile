@@ -21,10 +21,8 @@ RUN useradd -m service
 RUN mkdir -p /opt/serf/conf
 RUN mkdir -p /opt/serf/logs
 WORKDIR /opt/serf
-ADD /run.sh /opt/run.sh
 ADD /supervisord-serf.conf /etc/supervisor/conf.d/supervisord-serf.conf
 ADD /50-defaults.json /opt/serf/conf/50-defaults.json
-RUN chmod -R 755 /opt/run.sh
 RUN chown -R service:service /opt
 
 # Cleanup test
@@ -35,4 +33,4 @@ VOLUME /opt/serf/conf
 VOLUME /opt/serf/logs
 
 EXPOSE 7946 7373
-CMD ["/opt/run.sh"]
+CMD ["supervisord", "-n"]
